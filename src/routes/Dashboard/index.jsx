@@ -1,6 +1,6 @@
-import { redirect, useLoaderData, useNavigate, useNavigation } from "react-router-dom";
-import { deleteItem, getItems } from "../actions/item";
-import { getStoredUser } from "../actions/auth";
+import { Link, redirect, useLoaderData, useNavigate, useNavigation } from "react-router-dom";
+import { deleteItem, getItems } from "../../actions/item";
+import { getStoredUser } from "../../actions/auth";
 import { useEffect, useState } from "react";
 
 export async function loader() {
@@ -42,9 +42,9 @@ export default function Dashboard() {
     try {
       const accessToken = getStoredUser();
       const deletedItem = await deleteItem(idItemToDelete, accessToken);
-      setItemArray(items.filter(e => e._id !== deletedItem._id));
+      setItemArray(itemArray.filter(e => e._id !== deletedItem._id));
       handleCloseModal();
-      setIsLoading(true);
+      setIsLoading(false);
     } catch(e) {
       if(e.response.status === 401) {
         window.localStorage.removeItem('user');
@@ -59,7 +59,13 @@ export default function Dashboard() {
         <div className="d-flex bd-highlight mb-3">
           <div className="me-auto p-2 bd-highlight"><h2>Items</h2></div>
           <div className="p-2 bd-highlight">
-            <button type="button" className="btn btn-secondary" onClick="showUserCreateBox()">New</button>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => navigate('item/new')}
+            >
+              New
+            </button>
           </div>
         </div>
         <div className="table-responsive">
@@ -86,13 +92,12 @@ export default function Dashboard() {
                           <td>{item.name}</td>
                           <td>{item.description}</td>
                           <td>
-                            <button
-                              type="button"
+                            <Link
+                              to={`item/${item._id}`}
                               className="btn btn-warning"
-                              onClick="showUserEditBox()"
                             >
                               Edit
-                            </button>
+                            </Link>
                           </td>
                           <td>
                             <button

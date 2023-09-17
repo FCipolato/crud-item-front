@@ -6,10 +6,17 @@ import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } 
 import Login, {
   action as loginUser,
   loader as loginLoader
-} from './routes/login.jsx';
+} from './routes/Login';
 import Dashboard, {
   loader as itemsLoader,
-} from './routes/dashboard.jsx';
+} from './routes/Dashboard';
+import NewItem, {
+  action as createItem,
+} from "./routes/NewItem";
+import EditItem, {
+  action as editAction,
+  loader as itemLoader,
+} from './routes/EditItem';
 import ProtectedLayout from './routes/Layout/protectedLayout.jsx';
 
 const router = createBrowserRouter(
@@ -29,6 +36,17 @@ const router = createBrowserRouter(
           path='dashboard'
           element={<Dashboard />}
           loader={itemsLoader}
+        />
+        <Route
+          path='dashboard/item/new'
+          element={<NewItem />}
+          action={createItem}
+        />
+        <Route
+          path='dashboard/item/:id'
+          element={<EditItem />}
+          loader={itemLoader}
+          action={editAction}
         />
       </Route>
     </>

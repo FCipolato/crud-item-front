@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { redirect, useFetcher } from "react-router-dom";
-import { loginUser } from "../actions/auth";
+import { loginUser } from "../../actions/auth";
 
 export async function loader() {
   return window.localStorage.getItem('user') && redirect('/dashboard');
