@@ -18,6 +18,7 @@ import EditItem, {
   loader as itemLoader,
 } from './routes/EditItem';
 import ProtectedLayout from './routes/Layout/protectedLayout.jsx';
+import NotFound from './routes/NotFound';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +32,7 @@ const router = createBrowserRouter(
       />
       <Route
         element={<ProtectedLayout />}
+        errorElement={<NotFound />}
       >
         <Route
           path='dashboard'
@@ -49,6 +51,7 @@ const router = createBrowserRouter(
           action={editAction}
         />
       </Route>
+      <Route path='*' element={<NotFound />} />
     </>
   )
 );
