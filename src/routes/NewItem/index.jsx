@@ -1,6 +1,6 @@
 import { redirect, useFetcher, useNavigate } from "react-router-dom";
 import { newItem } from "../../actions/item";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getStoredUser } from "../../actions/auth";
 import './styles.scss';
 
@@ -25,6 +25,11 @@ export default function NewItem() {
   const [inputValueDesc, setInputValueDesc] = useState("");
   const navigate = useNavigate();
   const fetcher = useFetcher();
+
+  useEffect(() => {
+    const accessToken = getStoredUser();
+    !accessToken && navigate('/');
+  }, [navigate]);
 
   const handleInputNameItemChange = (event) => {
     setInputValueName(event.target.value);
